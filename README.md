@@ -1,2 +1,3 @@
-# k8s-infra
-K8s infrastructure
+# K8s infrastructure
+
+Fluxv2 uses this repository for deployments
