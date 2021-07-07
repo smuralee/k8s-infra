@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: books
-  namespace: beta-apps
+  name: games
+  namespace: alpha-apps
   labels:
-    env: dev
+    env: development
 spec:
   selector:
-    app: books
+    app: games
   type: LoadBalancer
   ports:
     - port: 80
@@ -17,17 +17,17 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: books
-  namespace: beta-apps
+  name: games
+  namespace: alpha-apps
   labels:
-    app: books
-    env: dev
+    app: games
+    env: development
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: books
-      env: dev
+      app: games
+      env: development
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -36,13 +36,13 @@ spec:
   template:
     metadata:
       labels:
-        app: books
-        env: dev
+        app: games
+        env: development
     spec:
       serviceAccountName: docker-registry
       containers:
-        - name: books
-          image: smuralee/books-api:beeb2c2
+        - name: games
+          image: smuralee/games-api:50a7165
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -50,7 +50,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 8080
-              path: /books
+              path: /games
             initialDelaySeconds: 60
           resources:
             requests:
